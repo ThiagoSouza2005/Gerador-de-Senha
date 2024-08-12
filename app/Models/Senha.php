@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Senha extends Model
 {
     use HasFactory;
+    protected $table = "senhas";
     protected $fillable = [
         "senha",
     ] ;

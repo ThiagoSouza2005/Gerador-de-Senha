@@ -10,6 +10,7 @@ use Inertia\Inertia;
 
 Route::get('/index', [SenhasController::class,'index'])->name('index');
 Route::get('/senha', [SenhasController::class,'gerarSenha'])->name('senha');
+Route::get('/gravarSenha', [SenhasController::class,'salvarSenha'])->name('senha-salva');
 
 
 

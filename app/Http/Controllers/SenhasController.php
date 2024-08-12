@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Senha;
 
 class SenhasController extends Controller
 {
     //
     public function index(){
-        return Inertia::render("Index");
+        $senhasGravadas = Senha::orderBy('id', 'desc')->pluck('senha');
+        return Inertia::render("Index",["senhasGravadas"=> $senhasGravadas]);
+
     }
 
     public function gerarSenha(){
@@ -38,8 +41,18 @@ class SenhasController extends Controller
         if ($simbolos){
             $senha .= str_shuffle($si);
         }
-       return response()->json(['senha'=>substr(str_shuffle($senha),0,$tamanho)]);
-
-}
-
+       return response()->json(['senha'=>substr(str_shuffle($senha),0,$tamanho)]);  
+    }
+   
+    public function salvarSenha( request $request ){
+        $valor = $request->senhaSalva;
+        Senha::create([
+             'senha'=> $valor
+             //nome da coluna do BD
+        ]);
+        // $senhasGravadas = Senha::all('senha');
+        // $senhasGravadas = Senha::all()->pluck('senha');
+        $senhasGravadas = Senha::orderBy('id', 'desc')->pluck('senha');
+        return response()->json(['senhaGavadas'=>$senhasGravadas]);
+    }
 }
